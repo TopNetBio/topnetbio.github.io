@@ -1,0 +1,113 @@
+site_name: TopNetBio
+site_description: Topological and network approaches to biological connectomes — documentation, tutorials, and tooling.
+site_url: https://topnetbio.github.io/
+site_author: TopNetBio
+repo_url: https://github.com/TopNetBio/topnetbio.github.io
+repo_name: TopNetBio/topnetbio.github.io
+edit_uri: edit/main/docs/
+copyright: Copyright &copy; 2026 TopNetBio
+
+theme:
+  name: material
+  language: en
+  features:
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.sections
+    - navigation.indexes
+    - navigation.top
+    - navigation.footer
+    - navigation.tracking
+    - toc.follow
+    - search.suggest
+    - search.highlight
+    - search.share
+    - content.code.copy
+    - content.code.annotate
+    - content.action.edit
+    - content.tabs.link
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: deep purple
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: deep purple
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+  font:
+    text: Inter
+    code: JetBrains Mono
+  icon:
+    repo: fontawesome/brands/github
+    edit: material/pencil
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/TopNetBio
+    - icon: fontawesome/brands/python
+      link: https://pypi.org/
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+      toc_depth: 3
+  - pymdownx.details
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.arithmatex:
+      generic: true
+
+plugins:
+  - search
+  - tags
+
+extra_javascript:
+  - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
+
+nav:
+  - Home: index.md
+  - Connectome Analysis:
+      - connectome-analysis/index.md
+      - Installation: connectome-analysis/installation.md
+      - Quickstart: connectome-analysis/quickstart.md
+      - Concepts: connectome-analysis/concepts.md
+      - Examples: connectome-analysis/examples.md
+      - Upstream docs: connectome-analysis/upstream.md
+  - Python Tutorial:
+      - python-tutorial/index.md
+      - 1. Environment Setup: python-tutorial/01-setup.md
+      - 2. Python Basics: python-tutorial/02-basics.md
+      - 3. Scientific Stack: python-tutorial/03-scientific-stack.md
+      - 4. Working with Graphs: python-tutorial/04-graphs.md
+      - 5. First Connectome Analysis: python-tutorial/05-first-analysis.md
+  - About: about.md
