@@ -115,6 +115,13 @@ nav:
       - Concepts: connectome-analysis/concepts.md
       - Examples: connectome-analysis/examples.md
       - Upstream docs: connectome-analysis/upstream.md
+  - API Reference:
+      - api/index.md
+      - Modelling: api/modelling.md
+      - Randomization: api/randomization.md
+      - Network:
+          - Topology: api/network-topology.md
+          - Classic: api/network-classic.md
   - Python Tutorial:
       - python-tutorial/index.md
       - 1. Environment Setup: python-tutorial/01-setup.md
