@@ -19,10 +19,10 @@ TopNetBio repository in the future; until then it lives at
 ## Decisions (from brainstorming)
 
 1. **Source of docs:** the real `connalysis` package (not stubs, not our own code).
-2. **Timing:** set up the full infrastructure now; it produces real docs immediately by fetching upstream source at build time.
-3. **Coverage & placement:** full coverage of all 6 upstream modules under a dedicated **API Reference** tab, cross-linked both ways with the existing Connectome Analysis guide and Python tutorial (the "integrated" option).
-4. **Source acquisition:** fetch real upstream source during the CI/build pipeline via shallow sparse checkout — *not* committed to this repo.
-5. **Upstream tracking mode:** pin to a **release tag**. Initial pin: `v1.1.0` (latest upstream release at design time).
+2. **Timing:** set up the full infrastructure now; it produces real docs immediately by fetching source at build time.
+3. **Coverage & placement:** all modules that exist in the chosen source under a dedicated **API Reference** tab, cross-linked both ways with the existing Connectome Analysis guide and Python tutorial (the "integrated" option). With the source decision below, that is **4 modules**: `modelling.modelling`, `randomization.randomization`, `network.topology`, `network.classic` (the fork has no `network.local` / `network.stats`).
+4. **Source acquisition:** fetch the source during the CI/build pipeline via shallow sparse checkout — *not* committed to this repo.
+5. **Source repo & tracking mode (revised 2026-05-19):** build from the maintainer fork **`git@github.com:hkmoon/connectome-analysis.git`**, branch **`main`** (unpinned — tracks fork fixes), *not* `openbraininstitute/connectome-analysis @ v1.1.0`. Reason: the published docstrings in upstream `v1.1.0` emit 32 warnings that fail `mkdocs build --strict` (griffe param/signature drift, `mkdocs_autorefs` unresolved targets, broken relative `See Also` links). These are fixed **at source in the fork** so the strict build passes legitimately rather than by relaxing our own link safety net.
 
 ## Why this works technically
 
