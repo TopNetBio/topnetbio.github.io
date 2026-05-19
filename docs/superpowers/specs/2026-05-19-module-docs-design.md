@@ -1,9 +1,11 @@
 # Design: Auto-generated module documentation for `connalysis`
 
 - **Date:** 2026-05-19
-- **Status:** Approved (pending written-spec review)
+- **Status:** Implemented (2026-05-19); spec body reconciled with revised decisions.
 - **Author:** TopNetBio
-- **Topic:** Add an auto-generated API Reference for the `connalysis` package to the TopNetBio MkDocs site, mirroring and integrating with the existing guide — built the same way as the upstream <https://openbraininstitute.github.io/connectome-analysis/> docs (mkdocstrings).
+- **Topic:** Add an auto-generated API Reference for the `connalysis` package to the TopNetBio MkDocs site, integrated with the existing guide — built with mkdocstrings (the same tool the upstream <https://openbraininstitute.github.io/connectome-analysis/> docs use), from the maintainer fork's source.
+
+> **Note:** The "Decisions" section reflects the final, revised plan. The remaining sections were updated post-implementation to match what shipped (fork `hkmoon/connectome-analysis` @ `main`, 4 modules, source-side docstring fixes). Original brainstorming proposed `openbraininstitute @ v1.1.0` with 6 modules and tag-pinning; that was superseded — see Decision #5.
 
 ## Problem
 
@@ -13,8 +15,9 @@ auto-generates module reference pages with **mkdocstrings** from numpy-style
 docstrings. We want equivalent module documentation hosted in the TopNetBio
 site, woven into the existing learning material rather than standing as an
 isolated reference. The `connalysis` source is expected to move into the
-TopNetBio repository in the future; until then it lives at
-`openbraininstitute/connectome-analysis`.
+TopNetBio repository in the future; until then the documented source is the
+maintainer fork `hkmoon/connectome-analysis` (the canonical upstream library
+home remains `openbraininstitute/connectome-analysis`).
 
 ## Decisions (from brainstorming)
 
@@ -36,15 +39,17 @@ never imports or compiles the package. Therefore:
 - `mkdocs build --strict` stays green because every `:::` target resolves
   against the fetched source and every nav entry exists.
 
-The only added build-time dependency is **network access to the upstream
-repository at the pinned tag**, which is reproducible and controlled.
+The only added build-time dependency is **network access to the fork
+repository at the tracked branch** (`hkmoon/connectome-analysis` @ `main`).
+It is unpinned by deliberate decision (#5) so source-side docstring fixes flow
+through without a manual bump; reproducibility is traded for that immediacy.
 
 ## Architecture
 
 ```
 GitHub Actions (deploy.yml)
   │
-  ├─ scripts/fetch-connalysis.sh   # shallow sparse checkout @ pinned tag
+  ├─ scripts/fetch-connalysis.sh   # shallow sparse checkout, fork @ main branch
   │     └─> _vendor/connectome-analysis/src/connalysis/**.py   (git-ignored)
   │
   └─ mkdocs build --strict
@@ -59,14 +64,12 @@ GitHub Actions (deploy.yml)
 
 | Path | Purpose |
 |---|---|
-| `scripts/fetch-connalysis.sh` | Idempotent shallow **sparse checkout** of `src/connalysis/` from `openbraininstitute/connectome-analysis` at the pinned ref into `_vendor/connectome-analysis/`. Pinned ref lives in one shell variable `CONNALYSIS_REF` (initial value `v1.1.0`). Safe to re-run; removes/refreshes `_vendor/` deterministically. |
+| `scripts/fetch-connalysis.sh` | Idempotent shallow **sparse checkout** of `src/connalysis/` from the source repo into `_vendor/connectome-analysis/`. Source/ref are two shell variables `CONNALYSIS_REPO` (default `https://github.com/hkmoon/connectome-analysis.git`) and `CONNALYSIS_REF` (default `main`). Safe to re-run; removes/refreshes `_vendor/` deterministically. |
 | `docs/api/index.md` | API Reference landing page: the module map and how it relates to the guide. |
 | `docs/api/modelling.md` | `::: connalysis.modelling.modelling` + one-line intro + back-link to guide. |
 | `docs/api/randomization.md` | `::: connalysis.randomization.randomization` + intro + back-link. |
 | `docs/api/network-topology.md` | `::: connalysis.network.topology` + intro + back-link. |
 | `docs/api/network-classic.md` | `::: connalysis.network.classic` + intro + back-link. |
-| `docs/api/network-local.md` | `::: connalysis.network.local` + intro + back-link. |
-| `docs/api/network-stats.md` | `::: connalysis.network.stats` + intro + back-link. |
 
 ### Edited files
 
@@ -76,7 +79,7 @@ GitHub Actions (deploy.yml)
 | `.gitignore` | Add `_vendor/`. |
 | `mkdocs.yml` | Add `mkdocstrings` plugin with python handler options (`docstring_style: numpy`, `show_signature_annotations: true`, `show_source: true`, `show_submodules: true`, `show_root_heading: true`, `heading_level: 2`, `paths: ["_vendor/connectome-analysis/src"]`); add `watch: _vendor/connectome-analysis/src`; add the **API Reference** nav tab. |
 | `.github/workflows/deploy.yml` | Add a step running `scripts/fetch-connalysis.sh` before `mkdocs build --strict`. |
-| `README.md` | Document the local-dev fetch step (run the script once before `mkdocs serve`) and how to bump the pinned tag. |
+| `README.md` | Document the local-dev fetch step (run the script once before `mkdocs serve`) and how to change the documented source (`CONNALYSIS_REPO`/`CONNALYSIS_REF`). |
 | `docs/connectome-analysis/quickstart.md` | Link `simplex_counts` → `../api/network-topology.md`, `erdos_renyi` → `../api/randomization.md`. |
 | `docs/connectome-analysis/concepts.md` | Link each concept (simplex, null model, communicability) to its module page. |
 | `docs/connectome-analysis/index.md` | Add an **API Reference** row to the "Sections in this guide" table. |
@@ -120,14 +123,17 @@ Nav addition (after the existing "Connectome Analysis" section):
     - Network:
         - Topology: api/network-topology.md
         - Classic: api/network-classic.md
-        - Local: api/network-local.md
-        - Stats: api/network-stats.md
 ```
+
+(The fork has no `network.local` / `network.stats` modules, so those pages and
+nav entries are intentionally absent — 4 documented modules total.)
 
 ## `scripts/fetch-connalysis.sh` behaviour
 
-- Single pinned variable: `CONNALYSIS_REF="v1.1.0"`.
-- Shallow (`--depth 1`) clone of the tag with **sparse checkout** limited to
+- Two override variables: `CONNALYSIS_REPO` (default
+  `https://github.com/hkmoon/connectome-analysis.git`) and `CONNALYSIS_REF`
+  (default `main`).
+- Shallow (`--depth 1`) fetch of the ref with **sparse checkout** limited to
   `src/connalysis`.
 - Target directory `_vendor/connectome-analysis/` is removed and recreated on
   each run so results are deterministic and the script is idempotent.
@@ -139,18 +145,21 @@ Nav addition (after the existing "Connectome Analysis" section):
 
 | Failure | Behaviour |
 |---|---|
-| Pinned tag missing upstream | Fetch script exits non-zero; CI fails with explicit message naming `CONNALYSIS_REF`. |
+| Ref missing on the source repo | Fetch script exits non-zero; CI fails with an explicit message naming `CONNALYSIS_REF` / `CONNALYSIS_REPO`. |
 | Network unreachable in CI | Fetch script exits non-zero; CI fails (no silent empty docs). |
-| Upstream renamed/removed a module at the pinned tag | Cannot happen for a fixed tag — pinning is precisely the mitigation. Only relevant when the tag is bumped; bumping is a deliberate change reviewed via the affected `docs/api/*` pages. |
+| Fork renames/removes a documented module on `main` | Tracking an unpinned branch (Decision #5) accepts this risk: a rename would surface as an unresolved `:::` target failing `mkdocs build --strict` in CI. Mitigation is fast feedback (red build) plus source control of the fork by the same maintainer; the fix is adjusting the affected `docs/api/*` pages + nav. |
 | Contributor runs `mkdocs serve` without fetching | `mkdocstrings` errors on unresolved `:::` targets. Mitigated by documenting the one-time `scripts/fetch-connalysis.sh` run in `README.md`; script is idempotent. |
 
 ## Testing / verification
 
 - `scripts/fetch-connalysis.sh` run locally populates
-  `_vendor/connectome-analysis/src/connalysis/` with `.py` files at tag
-  `v1.1.0`.
-- `mkdocs build --strict` completes with no warnings and renders all 6 module
-  pages with real API content (functions, signatures, source).
+  `_vendor/connectome-analysis/src/connalysis/` with `.py` files from
+  `hkmoon/connectome-analysis` @ `main`.
+- `mkdocs build --strict` completes with no warnings and renders all 4 module
+  pages with real API content (functions, signatures, source). Achieving zero
+  warnings required fixing docstring defects **at source in the fork** (griffe
+  param/signature drift, autorefs targets, broken `See Also` links) — see
+  Decision #5.
 - All new cross-links resolve under `--strict` (broken-link gate).
 - Re-running the fetch script is idempotent (same tree, no error).
 
@@ -165,13 +174,15 @@ When the real `connalysis` source is vendored into this repository:
    the local-dev fetch note in `README.md`.
 
 No nav changes, no new pages, no page rewrites. If the in-repo package adds,
-removes, or renames modules relative to `v1.1.0`, the only follow-up is
-adjusting the 6 `docs/api/*` page files and the matching nav entries.
+removes, or renames modules relative to the fork's current `main`, the only
+follow-up is adjusting the 4 `docs/api/*` page files and the matching nav
+entries (and adding pages if `network.local` / `network.stats` arrive).
 
 ## Out of scope (YAGNI)
 
-- Documenting `connalysis` submodules not exposed in the upstream nav
-  (`rand_utils`, etc.) — match upstream's 6-module surface only.
+- Documenting `connalysis` submodules beyond the 4 the fork exposes
+  (`rand_utils`, etc.) — match the fork's module surface only.
 - API versioning / multi-version docs.
-- Auto-bumping the pinned tag (Dependabot-style) — bumping stays a deliberate manual edit.
+- Auto-bumping or pinning the source ref — tracking the fork's `main` is the
+  deliberate decision (#5); changing the documented source stays a manual edit.
 - Documenting any TopNetBio-authored Python code (none exists yet).
