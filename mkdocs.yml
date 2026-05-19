@@ -90,6 +90,18 @@ markdown_extensions:
 plugins:
   - search
   - tags
+  - mkdocstrings:
+      default_handler: python
+      handlers:
+        python:
+          paths: ["_vendor/connectome-analysis/src"]
+          options:
+            docstring_style: numpy
+            show_signature_annotations: true
+            show_source: true
+            show_submodules: true
+            show_root_heading: true
+            heading_level: 2
 
 extra_javascript:
   - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
@@ -111,3 +123,6 @@ nav:
       - 4. Working with Graphs: python-tutorial/04-graphs.md
       - 5. First Connectome Analysis: python-tutorial/05-first-analysis.md
   - About: about.md
+
+watch:
+  - _vendor/connectome-analysis/src
