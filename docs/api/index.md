@@ -13,10 +13,12 @@ Auto-generated reference for the [`connalysis`](https://github.com/hkmoon/connec
 | [Randomization](randomization.md) | Generate randomized controls (null models). |
 | [Network · Topology](network-topology.md) | Topologically motivated network metrics. |
 | [Network · Classic](network-classic.md) | Classical graph-theoretic metrics. |
+| [Network · Local](network-local.md) | Local / per-node network measures. |
+| [Network · Stats](network-stats.md) | Statistical helpers for network data. |
 
 !!! note "Source"
     This reference is generated from the `connalysis` source at
-    [`hkmoon/connectome-analysis`](https://github.com/hkmoon/connectome-analysis) (`main`).
+    [`hkmoon/connectome-analysis`](https://github.com/hkmoon/connectome-analysis) (`master`).
     See the project README for how to change the documented source.
 
     {{ CONNALYSIS_PROVENANCE }}

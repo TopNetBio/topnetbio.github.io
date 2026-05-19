@@ -4,7 +4,7 @@
 set -euo pipefail
 
 CONNALYSIS_REPO="${CONNALYSIS_REPO:-https://github.com/hkmoon/connectome-analysis.git}"
-CONNALYSIS_REF="${CONNALYSIS_REF:-main}"
+CONNALYSIS_REF="${CONNALYSIS_REF:-master}"
 DEST="_vendor/connectome-analysis"
 SUBPATH="src/connalysis"
 PROVENANCE="_vendor/connalysis-provenance.txt"

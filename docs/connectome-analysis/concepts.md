@@ -61,5 +61,7 @@ These are the bread and butter of network science and a good sanity check before
 Every concept above maps to a documented function — see the [API Reference](../api/index.md):
 [Topology](../api/network-topology.md) ·
 [Classic](../api/network-classic.md) ·
+[Local](../api/network-local.md) ·
+[Stats](../api/network-stats.md) ·
 [Randomization](../api/randomization.md) ·
 [Modelling](../api/modelling.md)

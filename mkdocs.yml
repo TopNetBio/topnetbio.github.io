@@ -125,6 +125,8 @@ nav:
       - Network:
           - Topology: api/network-topology.md
           - Classic: api/network-classic.md
+          - Local: api/network-local.md
+          - Stats: api/network-stats.md
   - Python Tutorial:
       - python-tutorial/index.md
       - 1. Environment Setup: python-tutorial/01-setup.md

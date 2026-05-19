@@ -30,7 +30,7 @@ it is idempotent.
 
 The documented source defaults to the maintainer fork
 [`hkmoon/connectome-analysis`](https://github.com/hkmoon/connectome-analysis)
-on branch `main`, set via `CONNALYSIS_REPO` / `CONNALYSIS_REF` in
+on branch `master`, set via `CONNALYSIS_REPO` / `CONNALYSIS_REF` in
 `scripts/fetch-connalysis.sh`. To document a different repo or ref, change
 those defaults (or export the env vars), re-run the script, run
 `mkdocs build --strict`, and review the regenerated `docs/api/*` pages
