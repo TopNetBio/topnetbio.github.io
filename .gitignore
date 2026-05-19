@@ -1,6 +1,9 @@
 # MkDocs build output
 site/
 
+# Vendored upstream source for API docs (fetched at build time, never committed)
+_vendor/
+
 # Python
 __pycache__/
 *.py[cod]
