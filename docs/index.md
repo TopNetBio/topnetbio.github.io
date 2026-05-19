@@ -31,13 +31,13 @@ TopNetBio collects open tools, tutorials, and notes for analysing neural connect
 
     [:octicons-arrow-right-24: Start the tutorial](python-tutorial/index.md)
 
--   :material-book-open-variant:{ .lg .middle } __Upstream Documentation__
+-   :material-book-open-variant:{ .lg .middle } __API Reference__
 
     ---
 
-    The canonical `connalysis` API reference and examples live with the source code.
+    Auto-generated, function-level reference for every `connalysis` module — built from the library's own docstrings.
 
-    [:octicons-arrow-right-24: openbraininstitute.github.io/connectome-analysis](https://openbraininstitute.github.io/connectome-analysis/)
+    [:octicons-arrow-right-24: Browse the API Reference](api/index.md)
 
 -   :material-github:{ .lg .middle } __Source on GitHub__
 
@@ -63,4 +63,4 @@ The pages here are practical: load a matrix, run an analysis, read the result.
 |---|---|
 | New to Python | [Python Tutorial → Environment Setup](python-tutorial/01-setup.md) |
 | Comfortable with Python, new to connectomes | [Connectome Analysis → Quickstart](connectome-analysis/quickstart.md) |
-| Looking for the API reference | [Upstream docs](https://openbraininstitute.github.io/connectome-analysis/) |
+| Looking for the API reference | [API Reference](api/index.md) |
