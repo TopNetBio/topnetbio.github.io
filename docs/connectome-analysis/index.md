@@ -27,6 +27,7 @@
 | [Concepts](concepts.md) | What a *simplex*, *flag complex*, and *null model* actually mean. |
 | [Examples](examples.md) | Worked examples on small toy networks. |
 | [Upstream docs](upstream.md) | Pointer page to the official reference. |
+| [API Reference](../api/index.md) | Auto-generated function-level reference for every module. |
 
 ## Where this fits in the wider workflow
 

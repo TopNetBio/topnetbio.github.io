@@ -32,6 +32,9 @@ print("Density:        ", A.nnz / (N * (N - 1)))
 
 The smallest non-trivial topological feature of a directed network is the **directed simplex** — a chain of nodes where every earlier node connects to every later one. Counting simplices of each dimension is a structural fingerprint of the network.
 
+!!! tip "API reference"
+    Full signatures: [`network.topology`](../api/network-topology.md) for simplex counting, [`randomization`](../api/randomization.md) for null models.
+
 ```python
 import connalysis  # placeholder import path
 

@@ -55,3 +55,11 @@ These are the bread and butter of network science and a good sanity check before
 
 - Reimann et al., *Cliques of neurons bound into cavities provide a missing link between structure and function* (Frontiers in Computational Neuroscience, 2017).
 - Egas Santander et al., *Efficiency and reliability in biological neural network architectures* (bioRxiv, 2024).
+
+## API reference
+
+Every concept above maps to a documented function — see the [API Reference](../api/index.md):
+[Topology](../api/network-topology.md) ·
+[Classic](../api/network-classic.md) ·
+[Randomization](../api/randomization.md) ·
+[Modelling](../api/modelling.md)

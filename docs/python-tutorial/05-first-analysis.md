@@ -4,8 +4,8 @@ You now have the pieces. Time to assemble them into a real workflow.
 
 **Goal of this chapter:** load a connectivity matrix, characterise it with graph and topological measures, and compare against a null model.
 
-!!! note "Placeholder content"
-    Snippets use a likely `connalysis` API shape. Cross-check function names against the [upstream docs](https://openbraininstitute.github.io/connectome-analysis/) before relying on them.
+!!! note "Verify against the API reference"
+    Confirm exact function names and signatures in the [API Reference](../api/index.md) — e.g. [`network.topology`](../api/network-topology.md) and [`randomization`](../api/randomization.md).
 
 ## 5.1 Load (or build) a matrix
 
