@@ -18,3 +18,5 @@ Auto-generated reference for the [`connalysis`](https://github.com/hkmoon/connec
     This reference is generated from the `connalysis` source at
     [`hkmoon/connectome-analysis`](https://github.com/hkmoon/connectome-analysis) (`main`).
     See the project README for how to change the documented source.
+
+    {{ CONNALYSIS_PROVENANCE }}
