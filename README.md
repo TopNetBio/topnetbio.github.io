@@ -15,10 +15,26 @@ Live site: <https://topnetbio.github.io/>
 python -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
+./scripts/fetch-connalysis.sh   # one-time: fetch connalysis source for API docs
 mkdocs serve
 ```
 
 Then open <http://127.0.0.1:8000>. Pages live-reload on save.
+
+The API Reference is generated from `connalysis` source fetched by
+`scripts/fetch-connalysis.sh` into the git-ignored `_vendor/` directory
+(static analysis only — no build/compile). Re-run the script any time;
+it is idempotent.
+
+### Changing the documented connalysis source
+
+The documented source defaults to the maintainer fork
+[`hkmoon/connectome-analysis`](https://github.com/hkmoon/connectome-analysis)
+on branch `main`, set via `CONNALYSIS_REPO` / `CONNALYSIS_REF` in
+`scripts/fetch-connalysis.sh`. To document a different repo or ref, change
+those defaults (or export the env vars), re-run the script, run
+`mkdocs build --strict`, and review the regenerated `docs/api/*` pages
+(adjust the page files / nav if the module set changed).
 
 To build a static copy:
 
